@@ -1,13 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FormLancamento from "./components/FormLancamento";
 
 export default function App() {
-  const [lancamentos, setLancamentos] = useState([]);
+  const [lancamentos, setLancamentos] = useState(() => {
+    try {
+      const salvo = localStorage.getItem("lancamentos");
+      return salvo ? JSON.parse(salvo) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem("lancamentos", JSON.stringify(lancamentos));
+  }, [lancamentos]);
 
   function adicionar(novo) {
     setLancamentos([...lancamentos, novo]);
   }
 
+  // ... o return continua igual
   return (
     <div>
       <h1>Meu assistente financeiro</h1>
