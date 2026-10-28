@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import FormLancamento from "./components/FormLancamento";
+import Dashboard from "./components/Dashboard";
 
 export default function App() {
   const [lancamentos, setLancamentos] = useState(() => {
@@ -25,6 +26,8 @@ export default function App() {
       <h1>Meu assistente financeiro</h1>
 
       <FormLancamento aoAdicionar={adicionar} />
+
+      <Dashboard lancamentos={lancamentos} />
 
       <h2>Lançamentos</h2>
       <ul>
