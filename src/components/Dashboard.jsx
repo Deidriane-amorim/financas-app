@@ -22,7 +22,7 @@ export default function Dashboard({ lancamentos }) {
   const [quantidade, setQuantidade] = useState(12);
 
   if (lancamentos.length === 0) {
-    return <p>Cadastre um lançamento para ver o dashboard.</p>;
+    return <p className="card vazio">Cadastre um lançamento para ver o dashboard.</p>;
   }
 
   const mesInicial = lancamentos.map((l) => l.mesInicio).sort()[0];
@@ -31,10 +31,10 @@ export default function Dashboard({ lancamentos }) {
   const moeda = (valor) => `R$ ${valor.toFixed(2)}`;
 
   return (
-    <section>
+    <section className="card">
       <h2>Dashboard</h2>
 
-      <label>
+      <label className="filtro">
         Meses exibidos:{" "}
         <select
           value={quantidade}

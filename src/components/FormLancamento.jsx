@@ -26,7 +26,7 @@ export default function FormLancamento({ aoAdicionar }) {
   }
 
   return (
-    <form onSubmit={enviar}>
+    <form onSubmit={enviar} className = "form">
       <input
         type="text"
         placeholder="Nome (ex.: Aluguel)"

@@ -25,24 +25,51 @@ export default function App() {
 }
 
   // ... o return continua igual
-  return (
-    <div>
-      <h1>Meu assistente financeiro</h1>
+    return (
+  <main>
+    <h1>Meu assistente financeiro</h1>
 
+    <section className="card">
+      <h2>Novo lançamento</h2>
       <FormLancamento aoAdicionar={adicionar} />
+    </section>
 
-      <Dashboard lancamentos={lancamentos} />
+    <Dashboard lancamentos={lancamentos} />
 
+    <section className="card">
       <h2>Lançamentos</h2>
-      <ul>
-        {lancamentos.map((l) => (
-          <li key={l.id}>
-            {l.nome} ({l.tipo}): R$ {l.valor.toFixed(2)} de {l.mesInicio}{" "}
-            {l.mesFim ? `até ${l.mesFim}` : "sem data final"}{" "}
-            <button onClick={() => remover(l.id)}>Remover</button>
-          </li>
-        ))}
-      </ul>
-    </div>
+
+      {lancamentos.length === 0 ? (
+        <p className="vazio">Nenhum lançamento ainda.</p>
+      ) : (
+        <ul className="lista">
+          {lancamentos.map((l) => (
+            <li key={l.id} className="item">
+              <span className={`etiqueta ${l.tipo}`}>{l.tipo}</span>
+
+              <div className="item-info">
+                <strong>{l.nome}</strong>
+                <small>
+                  {l.mesInicio}{" "}
+                  {l.mesFim ? `até ${l.mesFim}` : "sem data final"}
+                </small>
+              </div>
+
+              <span className={`valor ${l.tipo}`}>
+                R$ {l.valor.toFixed(2)}
+              </span>
+
+              <button
+                className="botao-excluir"
+                onClick={() => remover(l.id)}
+              >
+                Excluir
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
+  </main>
   );
 }
