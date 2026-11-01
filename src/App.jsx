@@ -20,6 +20,10 @@ export default function App() {
     setLancamentos([...lancamentos, novo]);
   }
 
+  function remover(id) {
+  setLancamentos(lancamentos.filter((l) => l.id !== id));
+}
+
   // ... o return continua igual
   return (
     <div>
@@ -34,7 +38,8 @@ export default function App() {
         {lancamentos.map((l) => (
           <li key={l.id}>
             {l.nome} ({l.tipo}): R$ {l.valor.toFixed(2)} de {l.mesInicio}{" "}
-            {l.mesFim ? `até ${l.mesFim}` : "sem data final"}
+            {l.mesFim ? `até ${l.mesFim}` : "sem data final"}{" "}
+            <button onClick={() => remover(l.id)}>Remover</button>
           </li>
         ))}
       </ul>
