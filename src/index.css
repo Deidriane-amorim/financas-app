@@ -23,7 +23,7 @@ body {
 }
 
 #root {
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 24px 16px 48px;
   text-align: left;
@@ -222,5 +222,23 @@ h2 {
 @media (max-width: 560px) {
   .item {
     flex-wrap: wrap;
+  }
+}
+/* Formulário à esquerda, lista à direita */
+.colunas {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.colunas .card {
+  margin-bottom: 0;
+}
+
+/* Em telas menores, uma coluna só */
+@media (max-width: 800px) {
+  .colunas {
+    grid-template-columns: 1fr;
   }
 }
