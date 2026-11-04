@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import FormLancamento from "./components/FormLancamento";
 import Dashboard from "./components/Dashboard";
+import Logo from "./components/Logo";
 
 const nomesTipo = {
   receita: "Receita",
@@ -33,7 +34,13 @@ export default function App() {
   // ... o return continua igual
     return (
   <main>
-    <h1>Meu assistente financeiro</h1>
+    <header className="topo">
+      <Logo />
+      <div>
+        <h1>Meu assistente financeiro</h1>
+        <p>Acompanhe o que entra, o que sai e como o seu saldo vai evoluir.</p>
+      </div>
+    </header>
 
     <section className="card">
       <h2>Novo lançamento</h2>

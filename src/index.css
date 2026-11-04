@@ -194,6 +194,30 @@ button {
 .valor.variavel {
   color: var(--laranja);
 }
+
+h1,
+h2 {
+  font-family: "Poppins", system-ui, sans-serif;
+}
+
+.topo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.topo h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  line-height: 1.2;
+}
+
+.topo p {
+  margin: 4px 0 0;
+  color: var(--texto-suave);
+}
+
 /* Telas pequenas (celular) */
 @media (max-width: 560px) {
   .item {
