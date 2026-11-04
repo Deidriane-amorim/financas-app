@@ -8,6 +8,7 @@
   --texto: #1f2937;
   --texto-suave: #6b7280;
   --borda: #e5e7eb;
+  --laranja: #d9822b;
 }
 
 * {
@@ -186,6 +187,13 @@ button {
   margin: 0;
 }
 
+.etiqueta.variavel {
+  background: var(--laranja);
+}
+
+.valor.variavel {
+  color: var(--laranja);
+}
 /* Telas pequenas (celular) */
 @media (max-width: 560px) {
   .item {

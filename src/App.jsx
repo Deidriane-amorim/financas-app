@@ -2,6 +2,12 @@ import { useState, useEffect } from "react";
 import FormLancamento from "./components/FormLancamento";
 import Dashboard from "./components/Dashboard";
 
+const nomesTipo = {
+  receita: "Receita",
+  despesa: "Despesa",
+  variavel: "Variável",
+};
+
 export default function App() {
   const [lancamentos, setLancamentos] = useState(() => {
     try {
@@ -45,13 +51,14 @@ export default function App() {
         <ul className="lista">
           {lancamentos.map((l) => (
             <li key={l.id} className="item">
-              <span className={`etiqueta ${l.tipo}`}>{l.tipo}</span>
+              <span className={`etiqueta ${l.tipo}`}>{nomesTipo[l.tipo]}</span>
 
               <div className="item-info">
                 <strong>{l.nome}</strong>
                 <small>
-                  {l.mesInicio}{" "}
-                  {l.mesFim ? `até ${l.mesFim}` : "sem data final"}
+                  {l.tipo === "variavel"
+                    ? `gasto de ${l.mesInicio}`
+                    : `${l.mesInicio} ${l.mesFim ? `até ${l.mesFim}` : "sem data final"}`}
                 </small>
               </div>
 

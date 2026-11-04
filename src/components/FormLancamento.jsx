@@ -7,6 +7,8 @@ export default function FormLancamento({ aoAdicionar }) {
   const [mesInicio, setMesInicio] = useState("");
   const [mesFim, setMesFim] = useState("");
 
+  const ehVariavel = tipo === "variavel";
+
   function enviar(evento) {
     evento.preventDefault();
 
@@ -16,7 +18,7 @@ export default function FormLancamento({ aoAdicionar }) {
       tipo,
       valor: Number(valor),
       mesInicio,
-      mesFim: mesFim || null,
+      mesFim: ehVariavel ? mesInicio : mesFim || null,
     });
 
     setNome("");
@@ -26,17 +28,18 @@ export default function FormLancamento({ aoAdicionar }) {
   }
 
   return (
-    <form onSubmit={enviar} className = "form">
+    <form onSubmit={enviar} className="form">
       <input
         type="text"
-        placeholder="Nome (ex.: Aluguel)"
+        placeholder="Nome (ex.: Aluguel, Mercado)"
         value={nome}
         onChange={(e) => setNome(e.target.value)}
         required
       />
 
       <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
-        <option value="despesa">Despesa</option>
+        <option value="despesa">Despesa fixa</option>
+        <option value="variavel">Gasto variável</option>
         <option value="receita">Receita</option>
       </select>
 
@@ -51,7 +54,7 @@ export default function FormLancamento({ aoAdicionar }) {
       />
 
       <label>
-        Mês inicial
+        {ehVariavel ? "Mês do gasto" : "Mês inicial"}
         <input
           type="month"
           value={mesInicio}
@@ -60,14 +63,16 @@ export default function FormLancamento({ aoAdicionar }) {
         />
       </label>
 
-      <label>
-        Mês final (opcional)
-        <input
-          type="month"
-          value={mesFim}
-          onChange={(e) => setMesFim(e.target.value)}
-        />
-      </label>
+      {!ehVariavel && (
+        <label>
+          Mês final (opcional)
+          <input
+            type="month"
+            value={mesFim}
+            onChange={(e) => setMesFim(e.target.value)}
+          />
+        </label>
+      )}
 
       <button type="submit">Adicionar</button>
     </form>

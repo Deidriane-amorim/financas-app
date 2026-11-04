@@ -12,23 +12,31 @@ import {
 } from "recharts";
 import { calcularProjecao } from "../utils/calculos";
 
-function mesAtual() {
-  const hoje = new Date();
-  const mm = String(hoje.getMonth() + 1).padStart(2, "0");
-  return `${hoje.getFullYear()}-${mm}`;
-}
-
 export default function Dashboard({ lancamentos }) {
   const [quantidade, setQuantidade] = useState(12);
 
   if (lancamentos.length === 0) {
-    return <p className="card vazio">Cadastre um lançamento para ver o dashboard.</p>;
+    return (
+      <p className="card vazio">Cadastre um lançamento para ver o dashboard.</p>
+    );
   }
 
   const mesInicial = lancamentos.map((l) => l.mesInicio).sort()[0];
-  const dados = calcularProjecao(lancamentos, mesInicial, quantidade);
+  const calculado = calcularProjecao(lancamentos, mesInicial, quantidade);
 
-  const moeda = (valor) => `R$ ${valor.toFixed(2)}`;
+  // Divide o saldo acumulado em duas linhas: a real e a prevista
+  const dados = calculado.map((d, i) => {
+    const proximoEhPrevisao = calculado[i + 1]?.projetado;
+
+    return {
+      ...d,
+      real: d.projetado ? null : d.acumulado,
+      previsto: d.projetado || proximoEhPrevisao ? d.acumulado : null,
+    };
+  });
+
+  const moeda = (valor) =>
+    typeof valor === "number" ? `R$ ${valor.toFixed(2)}` : valor;
 
   return (
     <section className="card">
@@ -57,10 +65,18 @@ export default function Dashboard({ lancamentos }) {
           <Bar dataKey="pago" name="Pago" fill="#d64545" />
           <Line
             type="monotone"
-            dataKey="acumulado"
+            dataKey="real"
             name="Saldo acumulado"
             stroke="#3b6fd6"
             strokeWidth={2}
+          />
+          <Line
+            type="monotone"
+            dataKey="previsto"
+            name="Previsão"
+            stroke="#3b6fd6"
+            strokeWidth={2}
+            strokeDasharray="6 4"
           />
         </ComposedChart>
       </ResponsiveContainer>
