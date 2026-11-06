@@ -11,6 +11,7 @@ import {
   CartesianGrid,
 } from "recharts";
 import { calcularProjecao } from "../utils/calculos";
+import { formatarMoeda } from "../utils/formatar";
 
 export default function Dashboard({ lancamentos }) {
   const [quantidade, setQuantidade] = useState(12);

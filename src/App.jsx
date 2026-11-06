@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import FormLancamento from "./components/FormLancamento";
 import Dashboard from "./components/Dashboard";
 import Logo from "./components/Logo";
+import { formatarMoeda } from "./utils/formatar";
 
 const nomesTipo = {
   receita: "Receita",
@@ -58,8 +59,8 @@ export default function App() {
             <ul className="lista">
               {lancamentos.map((l) => (
                 <li key={l.id} className="item">
-                  <span className={`etiqueta ${l.tipo}`}>
-                    {nomesTipo[l.tipo]}
+                  <span className={`valor ${l.tipo}`}>
+                    {formatarMoeda(l.valor)}
                   </span>
 
                   <div className="item-info">
@@ -74,7 +75,7 @@ export default function App() {
                   </div>
 
                   <span className={`valor ${l.tipo}`}>
-                    R$ {l.valor.toFixed(2)}
+                    {formatarMoeda(l.valor)}
                   </span>
 
                   <button

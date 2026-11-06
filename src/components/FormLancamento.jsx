@@ -1,28 +1,53 @@
 import { useState } from "react";
+import { formatarMoeda, textoParaNumero } from "../utils/formatar";
 
 export default function FormLancamento({ aoAdicionar }) {
   const [nome, setNome] = useState("");
   const [tipo, setTipo] = useState("despesa");
-  const [valor, setValor] = useState("");
+  const [valorTexto, setValorTexto] = useState("");
+  const [valorFocado, setValorFocado] = useState(false);
   const [mesInicio, setMesInicio] = useState("");
   const [mesFim, setMesFim] = useState("");
 
   const ehVariavel = tipo === "variavel";
 
+  // Em edição mostra o que foi digitado; fora dela, mostra formatado
+  const valorExibido =
+    valorFocado || valorTexto === ""
+      ? valorTexto
+      : formatarMoeda(textoParaNumero(valorTexto));
+
+  function aoDigitarValor(evento) {
+    let texto = evento.target.value.replace(/[^\d,]/g, "");
+
+    if (texto.includes(",")) {
+      const [inteiro, decimais] = texto.split(",");
+      texto = `${inteiro},${decimais.slice(0, 2)}`;
+    }
+
+    setValorTexto(texto);
+  }
+
   function enviar(evento) {
     evento.preventDefault();
+
+    const valor = textoParaNumero(valorTexto);
+    if (valor <= 0) {
+      alert("Digite um valor maior que zero.");
+      return;
+    }
 
     aoAdicionar({
       id: Date.now(),
       nome,
       tipo,
-      valor: Number(valor),
+      valor,
       mesInicio,
       mesFim: ehVariavel ? mesInicio : mesFim || null,
     });
 
     setNome("");
-    setValor("");
+    setValorTexto("");
     setMesInicio("");
     setMesFim("");
   }
@@ -44,12 +69,13 @@ export default function FormLancamento({ aoAdicionar }) {
       </select>
 
       <input
-        type="number"
+        type="text"
+        inputMode="decimal"
         placeholder="Valor"
-        min="0"
-        step="0.01"
-        value={valor}
-        onChange={(e) => setValor(e.target.value)}
+        value={valorExibido}
+        onChange={aoDigitarValor}
+        onFocus={() => setValorFocado(true)}
+        onBlur={() => setValorFocado(false)}
         required
       />
 
