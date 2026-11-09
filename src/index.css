@@ -202,9 +202,12 @@ h2 {
 
 .topo {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: 16px;
   margin-bottom: 24px;
+  text-align: center;
 }
 
 .topo h1 {
